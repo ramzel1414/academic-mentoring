@@ -6,6 +6,7 @@ const users = [
   {id: 1, name:'John Doe'},
   {id: 2, name:'Jane Doe'},
   {id: 3, name:'Jil Doe'},
+  {id: 4, name:'Jimmy Doe'},
 ]
 
 const server = createServer((req, res) => {
