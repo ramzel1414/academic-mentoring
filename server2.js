@@ -13,6 +13,16 @@ const server = createServer((req, res) => {
     res.setHeader('Content-type', 'application/json');
     res.write(JSON.stringify(users))
     res.end();
+  } else if(req.url.match(/\/api\/users\/([0-9]+)/) && req.method === 'GET') {  // /api/users/:id
+    const id = req.url.split('/')[3];  
+    const user = users.find((user) => user.id === parseInt(id));
+    res.setHeader('Content-Type', 'application/json');
+    if(user) {  //if user exist
+      res.end(JSON.stringify(user));
+    } else {
+      res.statusCode = 404;
+      res.end(JSON.stringify({message: 'User not found'}));
+    }
   } else {
     res.setHeader('Content-type', 'application/json');
     res.statusCode = 404;
