@@ -24,6 +24,17 @@ const server = createServer((req, res) => {
       res.statusCode = 404;
       res.end(JSON.stringify({message: 'User not found'}));
     }
+  } else if(req.url === '/api/users' && req.method === 'POST') {
+    let body = '';
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+      const newUser = JSON.parse(body);
+      users.push(newUser);
+      res.statusCode = 201;
+      res.end(JSON.stringify(newUser))
+    })
   } else {
     res.setHeader('Content-type', 'application/json');
     res.statusCode = 404;
@@ -35,3 +46,22 @@ const server = createServer((req, res) => {
 server.listen(PORT, () => {
   console.log(`new server is running on port ${PORT}`);
 })
+
+
+
+//client sending request to server (function)
+const addUser = async (user) => {
+
+  const response = await fetch('http://localhost:3000/api/users', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(user), //send the user object as JSON
+  });
+
+  console.log('User added')
+};
+
+//client sending request to server (actual sending of data)
+addUser({ id: 5, name: 'Junky Doe'});
