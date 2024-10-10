@@ -1,15 +1,12 @@
-// JS is non-blocking by nature, 
-// it will execute the next line 
-// without waiting the current file to finish
+import fs, {readFileSync} from 'fs';
 
-// Passing a callback function to setTimeout
-setTimeout(() => {
-  console.log('hello world');
+//Asynchronous version
+fs.readFile('./test.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+})
 
-}, 3000);
-
-console.log('non-blocking nature');
-
-
-
+//Synchronous version
+const data = readFileSync('./test.txt', 'utf8')
+console.log(data);
 
