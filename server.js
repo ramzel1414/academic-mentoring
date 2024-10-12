@@ -3,10 +3,15 @@ const app = express();
 
 const PORT = 3000;
 
-app.get('/', (req, res) => {
-  res.send('hello world');
-  // res.send('<h1>hello world</h1>');
-  // res.send({message: 'hello world'});
+const posts = [
+  { id: 1, title:'Post One'},
+  { id: 2, title:'Post Two'},
+  { id: 3, title:'Post Three'},
+]
+
+//Get all posts
+app.get('/api/posts', (req, res) => {
+  res.json(posts);
 })
 
 app.listen(PORT, () => {
