@@ -1,1 +1,2 @@
 Writing to this file
+This is an appended text
