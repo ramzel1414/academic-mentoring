@@ -18,7 +18,13 @@ app.get('/api/posts', (req, res) => {
 app.get('/api/posts/:id', (req, res) => {
   // console.log(typeof req.params.id);
   const id = parseInt(req.params.id)
-  res.json(posts.filter((post) => post.id === id));
+  const post = posts.find((post) => post.id === id);
+
+  if(!post) {   // if post is not in the database
+    res.status(404).json({msg: `A post not found with an id of ${id}`})
+  } else {
+    res.status(200).json(post);
+  }
 })
 
 app.listen(PORT, () => {
