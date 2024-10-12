@@ -1,22 +1,15 @@
-import http from 'http';
+import express from 'express';
+const app = express();
 
 const PORT = 3000;
 
-const server = http.createServer((req, res) => {  
-  // res.end('<h1>hello world</h1>');
-  if(req.url == '/') {
-    res.writeHead(200, {'Content-type': 'text/html'})
-    res.end('<h1>Homepage</h1>');
-  } else if(req.url == '/about') {
-    res.writeHead(200, {'Content-type': 'text/html'})
-    res.end('<h1>About page</h1>');
-  } else {
-    res.writeHead(404, {'Content-type': 'text/html'})
-    res.end('<h1>Not found</h1>');
-  }
+app.get('/', (req, res) => {
+  res.send('hello world');
+  // res.send('<h1>hello world</h1>');
+  // res.send({message: 'hello world'});
 })
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
