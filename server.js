@@ -4,6 +4,9 @@ const app = express();
 
 const PORT = 3000;
 
+//body parse middleware
+app.use(express.json());
+
 app.use('/api/posts', posts);
 
 app.listen(PORT, () => {

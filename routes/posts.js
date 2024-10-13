@@ -25,4 +25,39 @@ router.get('/:id', (req, res) => {
   }
 })
 
+//Post request handler
+router.post('/', (req, res) => {
+  // console.log(req.body);
+  const newPost = {
+    id: posts.length + 1,
+    title: req.body.title,
+  };
+
+  posts.push(newPost);
+
+  res.status(201).json(posts);
+})
+
+
+
+
+////  CLIENT REQUEST SIMULATION  
+
+//sending request / Post method
+const addPost = async (post) => {
+  const response = await fetch('http://localhost:3000/api/posts', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(post), // Send the post object as JSON
+  });
+  
+  console.log(await response.json()); // Parse the response data as JSON
+
+
+};
+addPost({ title: 'New Post' });   // invoking the addPost function
+
+
 export default router;
