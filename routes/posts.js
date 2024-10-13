@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-const posts = [
+let  posts = [
   { id: 1, title:'Post One'},
   { id: 2, title:'Post Two'},
   { id: 3, title:'Post Three'},
@@ -50,6 +50,18 @@ router.put('/:id', (req, res) => {
   res.status(200).json(posts);
 })
 
+//DELETE request handler / Delete Post
+router.delete('/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const post = posts.find((post) => post.id === id)
+  if(!post) {   // if post is not in the database
+    res.status(404).json({msg: `A post not found with an id of ${id}`})
+  } 
+  
+  posts = posts.filter((post) => post.id !== id)   
+  res.status(200).json(posts);
+})
+
 
 
 ////  CLIENT REQUEST SIMULATION  
@@ -70,21 +82,36 @@ router.put('/:id', (req, res) => {
 // };
 // addPost({ title: 'New Post' });   // invoking the addPost function
 
-//sending request / Put method
-const updatePost = async (updatedPost) => {
+// //sending request / Put method
+// const updatePost = async (updatedPost) => {
+//   const response = await fetch('http://localhost:3000/api/posts/1', {
+//       method: 'PUT',
+//       headers: {
+//           'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(updatedPost), // Send the post object as JSON
+//   });
+
+//   console.log('Post updated');
+//   console.log(await response.json())
+
+// };
+
+// updatePost({ title: 'Updated Post' });
+
+//sending request / DELETE method
+const deletePost = async () => {
   const response = await fetch('http://localhost:3000/api/posts/1', {
-      method: 'PUT',
+      method: 'DELETE',
       headers: {
           'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedPost), // Send the post object as JSON
   });
 
-  console.log('Post updated');
   console.log(await response.json())
-
+  console.log('Post deleted');
 };
 
-updatePost({ title: 'Updated Post' });
+deletePost();
 
 export default router;
